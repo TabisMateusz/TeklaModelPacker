@@ -1,0 +1,19 @@
+﻿<mah:MetroWindow x:Class="TeklaModelPacker.MainWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:TeklaModelPacker"
+                xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 xmlns:view="clr-namespace:TeklaModelPacker.View"
+                mc:Ignorable="d"
+                Title="TeklaModelPacker v2" Height="400" Width="400"
+                 WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <view:MainViewView Grid.Column="0"/>
+    </Grid>
+</mah:MetroWindow>

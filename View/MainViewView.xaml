@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="TeklaModelPacker.View.MainViewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TeklaModelPacker.View"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <UserControl.Resources>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel>
+            <TextBox Margin="5 15 5 5"
+                  metro:TextBoxHelper.Watermark="Model name..."/>
+            <Button Content="Browse"/>
+            <CheckBox Content="Drawings (*.dg)"
+                   IsChecked="{Binding te}"/>
+            <CheckBox Content="Attributes Folder"
+                   IsChecked="{Binding te}"/>
+            <CheckBox Content="Objects.inp"
+                   IsChecked="{Binding te}"/>
+            <CheckBox Content="Profile catalog"
+                   IsChecked="{Binding te}"/>
+            <CheckBox Content="Material Catalog"
+                   IsChecked="{Binding te}"/>
+            <CheckBox Content="Bolt catalog"
+                   IsChecked="{Binding te}"/>
+            <CheckBox Content="Bolt assembly catalog"
+                   IsChecked="{Binding te}"/>
+            <Button Content="Create ZIP"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
