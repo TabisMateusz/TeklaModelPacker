@@ -143,6 +143,21 @@ namespace TeklaModelPacker.ViewModel
             }
         }
 
+        private string _stage;
+
+        public string Stage
+        {
+            get { return _stage; }
+            set 
+            {
+                if (_stage != value)
+                {
+                    _stage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string SelectedModelPath { get; set; }
 
         #endregion
@@ -158,6 +173,7 @@ namespace TeklaModelPacker.ViewModel
             MaterialCatalog = true;
             BoltCatalog = true;
             BoltAssemblyCatalog = true;
+            
         }
 
         private void findModel(object parameter)
@@ -168,19 +184,16 @@ namespace TeklaModelPacker.ViewModel
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
                 {
                     PackageName = new DirectoryInfo(dialog.SelectedPath).Name;
-                    //SelectedModelPath = dialog.SelectedPath;
+                    SelectedModelPath = dialog.SelectedPath;
                 }
             }
-            
         }
+
         private void createZip(object parameter) 
         { 
             ModelPacker modelPacker = new ModelPacker();
-            SelectedModelPath = "D:\\Models\\TEKLA 2022\\PROGRAMING_TESTS";
-
             modelPacker.CreatePackage(this);
-        
-        
+            Stage = "DONE";
         }
     }
 }

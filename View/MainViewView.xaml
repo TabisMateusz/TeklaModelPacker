@@ -28,7 +28,7 @@
                    IsChecked="{Binding DrawingsFiles}"/>
             <CheckBox Content="Attributes Folder"
                    IsChecked="{Binding AttributesFolder}"/>
-            <CheckBox Content="Objects.inp"
+            <CheckBox Content="ObjectsInp"
                    IsChecked="{Binding ObjectsInp}"/>
             <CheckBox Content="Profile catalog"
                    IsChecked="{Binding ProfileCatalog}"/>
@@ -40,6 +40,7 @@
                    IsChecked="{Binding BoltAssemblyCatalog}"/>
             <Button Content="Create ZIP"
                     Command="{Binding CreateZipFileCommand}"/>
+            <Label Content="{Binding Stage, Mode=TwoWay}"/>
         </StackPanel>
     </Grid>
 </UserControl>

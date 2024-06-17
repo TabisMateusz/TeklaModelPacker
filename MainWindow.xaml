@@ -8,12 +8,13 @@
                  xmlns:view="clr-namespace:TeklaModelPacker.View"
                 mc:Ignorable="d"
                 Title="TeklaModelPacker v2" Height="400" Width="400"
-                 WindowStartupLocation="CenterScreen">
+                 WindowStartupLocation="CenterScreen"
+                 ResizeMode="NoResize">
+                 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <view:MainViewView Grid.Column="0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <view:MainViewView Grid.Row="0"/>
     </Grid>
 </mah:MetroWindow>

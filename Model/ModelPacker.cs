@@ -10,18 +10,18 @@ namespace TeklaModelPacker.Model
 {
     public class ModelPacker
     {
-        private void CopyElements(string path,string packagePath)
+        private void CopyElements(string path, string packagePath)
         {
-            Directory.CreateDirectory(packagePath+$"\\{Path.GetFileName(path)}");
+            Directory.CreateDirectory(packagePath + $"\\{Path.GetFileName(path)}");
             foreach (var file in Directory.GetFiles(path))
             {
                 try
                 {
-                    File.Copy(file, Path.Combine(packagePath+ $"\\{Path.GetFileName(path)}",Path.GetFileName(file)) , true);
+                    File.Copy(file, Path.Combine(packagePath + $"\\{Path.GetFileName(path)}", Path.GetFileName(file)), true);
                 }
-                catch 
-                { 
-                
+                catch
+                {
+
                 }
             }
             var subDirectories = Directory.GetDirectories(path);
@@ -31,62 +31,92 @@ namespace TeklaModelPacker.Model
             }
         }
 
-        public void CreatePackage(MainViewViewModel viewModel)
+        public async void CreatePackage(MainViewViewModel viewModel)
         {
-            var packagePath = $"D:\\AUTOZAPIS\\TEST";
+            List<Task> tasks = new List<Task>();
             var directoires = Directory.EnumerateDirectories(viewModel.SelectedModelPath);
             var files = Directory.GetFiles(viewModel.SelectedModelPath);
-            Directory.CreateDirectory(packagePath);
+            Directory.CreateDirectory(viewModel.SelectedModelPath);
+
+            List<Task> tasks1 = new List<Task>();
 
             if (viewModel.DrawingsFiles)
             {
-                var paths = directoires.Select((path) => new { path = path }).Where(x => x.path.Contains("drawings"));
-                
-                CopyElements(paths.First().path, packagePath);
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    var paths = directoires.Select((path) => new { path = path }).Where(x => x.path.Contains("drawings"));
+                    CopyElements(paths.First().path, viewModel.SelectedModelPath);
+                }));
             }
             if (viewModel.AttributesFolder)
             {
-                string[] attributes = { "AI_imp", "attributes" };
-                foreach (var element in attributes)
+                tasks.Add(Task.Factory.StartNew(() =>
                 {
-                    var paths = directoires.Select((path) => new { path = path }).Where(x => x.path.Contains(element));
-
-                    CopyElements(paths.First().path, packagePath);
-                }
-                
+                    string[] attributes = { "AI_imp", "attributes" };
+                    foreach (var element in attributes)
+                    {
+                        var paths = directoires.Select((path) => new { path = path }).Where(x => x.path.Contains(element));
+                        CopyElements(paths.First().path, viewModel.SelectedModelPath);
+                    }
+                }));
             }
             if (viewModel.ObjectsInp)
             {
-                var objectInp = files.Where(x => x.Contains("objects.inp")).FirstOrDefault();
-                File.Copy(objectInp, Path.Combine(packagePath, Path.GetFileName(objectInp)), true);
-
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    var file = files.Where(x => x.Contains("objects.inp")).FirstOrDefault();
+                    File.Copy(file, Path.Combine(viewModel.SelectedModelPath, Path.GetFileName(file)), true);
+                }));
             }
             if (viewModel.ProfileCatalog)
             {
-                var objectInp = files.Where(x => x.Contains("objects.inp")).FirstOrDefault();
-                File.Copy(objectInp, Path.Combine(packagePath, Path.GetFileName(objectInp)), true);
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    var file = files.Where(x => x.Contains("profdb.bin")).FirstOrDefault();
+                    File.Copy(file, Path.Combine(viewModel.SelectedModelPath, Path.GetFileName(file)), true);
+                }));
 
             }
             if (viewModel.MaterialCatalog)
             {
-                var objectInp = files.Where(x => x.Contains("objects.inp")).FirstOrDefault();
-                File.Copy(objectInp, Path.Combine(packagePath, Path.GetFileName(objectInp)), true);
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    var file = files.Where(x => x.Contains("matdb.bin")).FirstOrDefault();
+                    File.Copy(file, Path.Combine(viewModel.SelectedModelPath, Path.GetFileName(file)), true);
+                }));
 
             }
             if (viewModel.BoltCatalog)
             {
-                var objectInp = files.Where(x => x.Contains("objects.inp")).FirstOrDefault();
-                File.Copy(objectInp, Path.Combine(packagePath, Path.GetFileName(objectInp)), true);
-
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    var file = files.Where(x => x.Contains("screwdb.db")).FirstOrDefault();
+                    File.Copy(file, Path.Combine(viewModel.SelectedModelPath, Path.GetFileName(file)), true);
+                }));
             }
             if (viewModel.BoltAssemblyCatalog)
             {
-                var objectInp = files.Where(x => x.Contains("objects.inp")).FirstOrDefault();
-                File.Copy(objectInp, Path.Combine(packagePath, Path.GetFileName(objectInp)), true);
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    var file = files.Where(x => x.Contains("assdb.db")).FirstOrDefault();
+                    File.Copy(file, Path.Combine(viewModel.SelectedModelPath, Path.GetFileName(file)), true);
+                }));
 
             }
-            
+            tasks.Add(Task.Factory.StartNew(() =>
+            {
+                string[] extensions = { ".db1", ".db2",".tpl" };
+                foreach (var data in extensions)
+                {
+                    foreach (var file in files.Where(x => x.EndsWith(data)))
+                    {
+                        File.Copy(file, Path.Combine(viewModel.SelectedModelPath, Path.GetFileName(file)), true);
 
+                    }
+                }
+            }));
+
+            await Task.WhenAll(tasks);
         }
     }
 }
