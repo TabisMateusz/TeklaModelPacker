@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TeklaModelPacker.ViewModel;
 
 namespace TeklaModelPacker.View
 {
@@ -23,6 +24,7 @@ namespace TeklaModelPacker.View
         public MainViewView()
         {
             InitializeComponent();
+            DataContext = new MainViewViewModel();
         }
     }
 }

@@ -20,23 +20,26 @@
     <Grid>
         <StackPanel>
             <TextBox Margin="5 15 5 5"
-                  metro:TextBoxHelper.Watermark="Model name..."/>
-            <Button Content="Browse"/>
+                  metro:TextBoxHelper.Watermark="Model name..."
+                     Text="{Binding PackageName}"/>
+            <Button Content="Browse"
+                    Command="{Binding BrowseFoldersCommand}"/>
             <CheckBox Content="Drawings (*.dg)"
-                   IsChecked="{Binding te}"/>
+                   IsChecked="{Binding DrawingsFiles}"/>
             <CheckBox Content="Attributes Folder"
-                   IsChecked="{Binding te}"/>
+                   IsChecked="{Binding AttributesFolder}"/>
             <CheckBox Content="Objects.inp"
-                   IsChecked="{Binding te}"/>
+                   IsChecked="{Binding ObjectsInp}"/>
             <CheckBox Content="Profile catalog"
-                   IsChecked="{Binding te}"/>
+                   IsChecked="{Binding ProfileCatalog}"/>
             <CheckBox Content="Material Catalog"
-                   IsChecked="{Binding te}"/>
+                   IsChecked="{Binding MaterialCatalog}"/>
             <CheckBox Content="Bolt catalog"
-                   IsChecked="{Binding te}"/>
+                   IsChecked="{Binding BoltCatalog}"/>
             <CheckBox Content="Bolt assembly catalog"
-                   IsChecked="{Binding te}"/>
-            <Button Content="Create ZIP"/>
+                   IsChecked="{Binding BoltAssemblyCatalog}"/>
+            <Button Content="Create ZIP"
+                    Command="{Binding CreateZipFileCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
