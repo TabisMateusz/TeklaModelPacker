@@ -161,8 +161,6 @@ namespace TeklaModelPacker.ViewModel
         public string SelectedModelPath { get; set; }
 
         #endregion
-
-
         public ICommand BrowseFoldersCommand { get; set; }
         public ICommand CreateZipFileCommand { get; set; }
         public MainViewViewModel()
@@ -175,7 +173,6 @@ namespace TeklaModelPacker.ViewModel
             BoltAssemblyCatalog = true;
             
         }
-
         private void findModel(object parameter)
         {
             using (var dialog = new FolderBrowserDialog())
@@ -188,12 +185,21 @@ namespace TeklaModelPacker.ViewModel
                 }
             }
         }
-
-        private void createZip(object parameter) 
-        { 
-            ModelPacker modelPacker = new ModelPacker();
-            modelPacker.CreatePackage(this);
-            Stage = "DONE";
+        private async void createZip(object parameter) 
+        {
+            await updateStage();
+            ModelPacker modelPacker = new ModelPacker(this);
+            await modelPacker.createPackage();
+            Stage = "Done";
+        }
+        private async Task updateStage()
+        {
+            setStageValue();
+            await Task.Delay(1);
+        }
+        private void setStageValue()
+        {
+            Stage = "Preparing...";
         }
     }
 }
